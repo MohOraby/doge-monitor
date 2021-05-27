@@ -7,15 +7,13 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-  return res.redirect('/reddit');
-});
 
-app.get('/reddit', async (req, res) => {
+app.get('/', async (req, res) => {
   try {
-    const { data } = await axios.get('https://www.reddit.com/r/dogecoin/rising/.json?count=10');
-    const posts = data.data.children;
-    const reducedPosts = posts.map(post => {
+    const redditRes = await axios.get('https://www.reddit.com/r/dogecoin/rising/.json?count=20');
+    const redditData = redditRes.data;
+    const posts = redditData.data.children;
+    const redditPosts = posts.map(post => {
       return {
         title: post.data.title,
         thumbnail: post.data.thumbnail,
@@ -23,8 +21,15 @@ app.get('/reddit', async (req, res) => {
       };
     });
 
-    return res.render('reddit', { posts: reducedPosts });
+    const binRes = await axios.get('https://api.binance.com/api/v3/ticker/price?symbol=DOGEUSDT');
+    const binData = binRes.data;
+
+    return res.render('index', { redditPosts, binData });
   } catch (err) {
     return res.status(400).send(err.message);
   }
 });
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => console.log(`Listening on port ${port}`));
