@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>Doge Monitor</title>
+  <meta name="viewport" content="width=device-width, intial-scale=1.0" />
+  <link rel="stylesheet" href="/vendors/css/bootstrap.min.css" type="text/css" />
+  <link rel="stylesheet" href="/vendors/css/ionicons.css" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <h1>DOGE to USDT: <%= binData.price %>
+      </h1>
+    </div>
+    <hr>
+    <div class="row">
+      <h1>Latest Reddit Posts</h1>
+      <% for (const post of redditPosts) { %>
+        <div class="card">
+          <img src="<%= post.thumbnail %>" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= post.title %>
+            </h5>
+            <a href="<%= post.url %>" class="btn btn-info">See post in Reddit</a>
+          </div>
+        </div>
+        <hr>
+      <% } %>
+    </div>
+  </div>
+
+  <script src="/vendors/js/jquery-2.2.4.min.js"></script>
+  <script src="/vendors/js/bootstrap.js"></script>
+</body>
+
+</html>

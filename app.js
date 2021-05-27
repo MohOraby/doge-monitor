@@ -10,7 +10,7 @@ app.use(express.static('public'));
 
 app.get('/', async (req, res) => {
   try {
-    const redditRes = await axios.get('https://www.reddit.com/r/dogecoin/rising/.json?count=20');
+    const redditRes = await axios.get('https://www.reddit.com/r/dogecoin/new/.json?count=20');
     const redditData = redditRes.data;
     const posts = redditData.data.children;
     const redditPosts = posts.map(post => {
